@@ -23,18 +23,18 @@ Example
 
 1. Create a patch of, for example, the HEAD commit in your Git repository:
 
-	repo1]$ git format-patch HEAD^
+        repo1]$ git format-patch HEAD^
 
 2. Switch to a different repository in which you'd like to apply the patch to a file or files of your choosing, and run **apply-patch-to-file** script, specifying the previously-created patch as an argument:
 
-	repo2]$ apply-patch-to-file -i ~/patches/0001-my-test-commit.patch
+        repo2]$ apply-patch-to-file -i ~/patches/0001-my-test-commit.patch
 
 3. In your editor, specify the target files where the patch should apply:
 
-    File Specified in Patch   Target File
-    -----------------------   -----------
-    test/blue.xml             test/red.xml
-    images/hello.sh           test/images/hi.sh
+        File Specified in Patch   Target File
+        -----------------------   -----------
+        test/blue.xml             test/red.xml
+        images/hello.sh           test/images/hi.sh
 
 4. Save and exit you editor. In case of no conflicts, check **git log** to see your patch applied.
 
