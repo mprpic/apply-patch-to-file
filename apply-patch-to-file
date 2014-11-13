@@ -119,7 +119,7 @@ if test $use_editor -eq 1; then
     process_temp_file
 else
     # Test if destination file exists
-    if test ! -f $target_file; then
+    if test ! -f "$target_file"; then
 	return_error "Specified target file is not a regular file." 2
     fi
 
@@ -128,7 +128,7 @@ else
 	return_error "Specified patch modifies $patch_file_count files, please use interactive mode to specify multiple target files." 22
     fi
 
-    replace_file_names ${patch_file_list[0]} $target_file
+    replace_file_names ${patch_file_list[0]} "$target_file"
 fi
 
 # Patch repo with the modified patch file
