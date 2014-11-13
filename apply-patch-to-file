@@ -21,7 +21,7 @@ function return_error {
     local exit_code=${2-1}
 
     printf "%s\n" "$name: $error_msg" >&2
-    clenup
+    cleanup
     exit $exit_code
 }
 
