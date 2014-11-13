@@ -15,6 +15,11 @@ use_editor=1
 # Clean up if script is interrupted or terminated.
 trap "cleanup" SIGINT SIGTERM 1 0
 
+# To support a list that's not delimited by spaces, we need to change IFS
+# Back it up so we can restore it later
+oldIFS=$IFS
+IFS=$'\n'
+
 function return_error {
 
     local error_msg=${1-"Unexpected error"}
@@ -26,7 +31,7 @@ function return_error {
 }
 
 function cleanup {
-
+    IFS=$oldIFS
     /bin/rm -f $temp_file
 }
 
