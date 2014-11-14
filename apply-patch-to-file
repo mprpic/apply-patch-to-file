@@ -15,18 +15,23 @@ use_editor=1
 # Clean up if script is interrupted or terminated.
 trap "cleanup" SIGINT SIGTERM 1 0
 
+# To support a list that's not delimited by spaces, we need to change IFS
+# Back it up so we can restore it later
+oldIFS=$IFS
+IFS=$'\n'
+
 function return_error {
 
     local error_msg=${1-"Unexpected error"}
     local exit_code=${2-1}
 
     printf "%s\n" "$name: $error_msg" >&2
-    clenup
+    cleanup
     exit $exit_code
 }
 
 function cleanup {
-
+    IFS=$oldIFS
     /bin/rm -f $temp_file
 }
 
@@ -119,7 +124,7 @@ if test $use_editor -eq 1; then
     process_temp_file
 else
     # Test if destination file exists
-    if test ! -f $target_file; then
+    if test ! -f "$target_file"; then
 	return_error "Specified target file is not a regular file." 2
     fi
 
@@ -128,7 +133,7 @@ else
 	return_error "Specified patch modifies $patch_file_count files, please use interactive mode to specify multiple target files." 22
     fi
 
-    replace_file_names ${patch_file_list[0]} $target_file
+    replace_file_names ${patch_file_list[0]} "$target_file"
 fi
 
 # Patch repo with the modified patch file
